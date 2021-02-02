@@ -27,13 +27,14 @@ char checkerboard[5][5] = { {'*','*','*','*','*'},
                             {'*','*','*','*','*'} };  // 初始化棋盤
 int main() 
 {
+   
     while (1)
     {   
         showCheckerboard();
         int y=playChess();
         int now=checkRule(y);
         if (now != 0) {
-            cout << "winner is " << (char)now << endl;
+            cout << "winner is " << (char)now <<endl;
             break;
         }
         int i=checkFull();
@@ -42,7 +43,8 @@ int main()
             break;
         }
     }
-    cout << "game over";
+    cout << "game End" << endl;
+    showCheckerboard();
     return 0;
 
 } 
@@ -72,51 +74,47 @@ int checkRule(int one) {
                               checkerboard[1][3],
                               checkerboard[0][4]}; //斜的右下到左上
     int x, y;
-    x = one % 5; 
+
+    x = one % 5;   // 5 y=1 x=0
     y = one / 5;
     char now = checkerboard[x][y];  //這手棋是黑是白
+
     for (int i = 0; i < 5; i++) {
-        countx[i] = checkerboard[i][y];  //橫
-        county[i] = checkerboard[x][i];  //直
+        countx[i] = checkerboard[i][y];  //直
+        county[i] = checkerboard[x][i];  //橫
     }
     
-    if (countx[1] == now) {
-        if (countx[0] == now && countx[2] == now && countx[3] == now) {
-            if (countx[4] == now) {
-                return (int)now;
-            }else{
-                clearRow(y);
-            }
+    if (countx[1] == now &&countx[2] == now && countx[3] == now ) {
+        
+        if (countx[4] == now && countx[0]==now) {
+            return (int)now;
+        }else if(countx[4] == now || countx[0] == now){
+            clearRow(y);
+        } 
+    }
+    if (county[1] == now&& county[2] == now && county[3] == now) {
+        
+        if (county[4] == now && county[0]== now) {
+            return (int)now;
+        }else if (county[4] == now || county[0]== now) {
+            clearLn(x);
         }
     }
-    if (county[1] == now) {
-        if (county[0] == now && county[2] == now && county[3] == now) {
-            if (county[4] == now) {
-                return (int)now;
-            }
-            else {
-                clearLn(x);
-            }
+    if (countOblique1[1] == now&& countOblique1[2] == now && countOblique1[3] == now) {
+        
+        if (countOblique1[4] == now&&countOblique1[0] == now) {
+           return (int)now;
         }
+        else if(countOblique1[4] == now || countOblique1[0] == now) {
+           clearLToR();
+        }  
     }
-    if (countOblique1[1] == now) {
-        if (countOblique1[0] == now && countOblique1[2] == now && countOblique1[3] == now) {
-            if (countOblique1[4] == now) {
-                return (int)now;
-            }
-            else {
-                clearLToR();
-            }
+    if (countOblique2[1] == now&& countOblique2[2] == now && countOblique2[3] == now) { 
+        if (countOblique2[4] == now&&countOblique2[0] == now ) {
+           return (int)now;
         }
-    }
-    if (countOblique2[1] == now) {
-        if (countOblique2[0] == now && countOblique2[2] == now && countOblique2[3] == now) {
-            if (countOblique2[4] == now) {
-                return (int)now;
-            }
-            else {
-                clearRToL();
-            }
+        else if(countOblique2[4] == now || countOblique2[0] == now){
+           clearRToL();
         }
     }
     return 0;

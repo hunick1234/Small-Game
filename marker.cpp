@@ -59,8 +59,7 @@ int playChess() {
     scanf_s("%d %d %c", &x, &y, &z);
     checkerboard[x][y] = z;
     return 5*y+x;  //下的位置
-    --bareCheckerboard;
-}
+    
 
 /*只要確定是否連成五個或是四個*/
 int checkRule(int one) {

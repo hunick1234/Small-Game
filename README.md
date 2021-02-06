@@ -6,5 +6,5 @@
 ## Minesweeper
    有Bug
    
-## 自創改編五子棋+井字棋 marker
+## Marker 改編五子棋+井字棋 
    剩計算盤面 最後一個步驟

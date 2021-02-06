@@ -25,9 +25,10 @@ char checkerboard[5][5] = { {'*','*','*','*','*'},
                             {'*','*','*','*','*'},
                             {'*','*','*','*','*'}, 
                             {'*','*','*','*','*'} };  // 初始化棋盤
+int bareCheckerboard = 25; //計算剩餘空格
 int main() 
 {
-   
+    
     while (1)
     {   
         showCheckerboard();
@@ -38,7 +39,8 @@ int main()
             break;
         }
         int i=checkFull();
-        if (i == 1) {
+        
+        if (i == 0) {
             endCheckRule();
             break;
         }
@@ -57,6 +59,7 @@ int playChess() {
     scanf_s("%d %d %c", &x, &y, &z);
     checkerboard[x][y] = z;
     return 5*y+x;  //下的位置
+    --bareCheckerboard;
 }
 
 /*只要確定是否連成五個或是四個*/
@@ -129,21 +132,24 @@ void clearRow(int y) {   //clear橫的
     for (int i = 0; i < 5; i++) {
         checkerboard[i][y] = '*';
     }
+   
 }
 void clearLn(int x) {   //clear直的
     for (int i = 0; i < 5; i++) {
         checkerboard[x][i] = '*';
     }
+   
 }
 void clearLToR() {   //clear左到右
     for (int i = 0; i < 5; i++) {
         checkerboard[i][i] = '*';
     }
-}
+   
 void clearRToL() {   //clear右到左
     for (int i = 0,a=4; i < 5; i++,a--) {
         checkerboard[a][i] = '*';
     }
+   
 }
 
 void showCheckerboard() {
@@ -157,15 +163,17 @@ void showCheckerboard() {
     }
 
 }
-int checkFull() {
+int checkFull(){
     for (int i = 0; i < 5; i++)
     {
         for (auto& c : checkerboard[i])
         {
             if (c=='*'){
-                return 0; //not full
+                return 1; //not full
             }
         }
     }
-    return 1; //full 
+    return 0; //full 
+    /*掃描整個棋盤*/
+
 }
